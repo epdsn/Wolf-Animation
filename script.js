@@ -18,7 +18,7 @@
 		xPos : 0, // used to store the current X coordinate of the container div for animating.
 		// images that will be replaced when the user clicks on an action
 		imageIndex : 0,
-		images  :  ["images/Wolf_normal.gif", "images/Wolf_howl.gif", "images/Wolf_liedown.gif", "images/Wolf_point.gif","images/Wolf_roll.gif","images/Wolf_sit.gif", "images/leftAnime.gif", "images/rightAnime.gif"],
+		images  :  ["images/Wolf_normal.gif", "images/Wolf_howl.gif", "images/Wolf_liedown.gif", "images/Wolf_point.gif","images/Wolf_roll.gif","images/Wolf_sit.gif", "images/leftAnime.gif", "images/rightAnime.gif", "images/Wolf_sit_right.gif"],
 		// display messages that correspond to the actions.
 		commandMessage : ['Use the commands below to control the wolf or to move hime left or right.', 'The wolf goes, "ARH-WOOOOOOOOOOOOOOOOOOOO".', "The wolf Lies down.", "The wolf points and something in the distance.", "The wolf plays dead.", "The wolf sits.", "The wolf runs left.", "The wolf runs right."],
 		
@@ -60,7 +60,9 @@
 			//stop the animation if it reaches the left side of the container (0px boundary)
 			if (currentPos <= 0) {
 				pet.petContainer.style.left = '0px';
-				pet.stop();
+				clearTimeout(pet.animate);
+				pet.animate = null;
+				petImage.src = pet.images[8]; // Use sit image when reaching left boundary
 				return;
 			}
 			
