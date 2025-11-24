@@ -55,9 +55,17 @@
 		// Move left action that calls itself and keeps going until stop is called.
 		animateLeft : function() {
 			pet.xPos = pet.petContainer.style.left;
-			console.log("xpos: " + pet.xPos );
-			pet.petContainer.style.left = parseInt(pet.petContainer.style.left) - 10 + 'px';
-			pet.animate = setTimeout(pet.animateLeft,20);	
+			var currentPos = parseInt(pet.petContainer.style.left);
+			
+			//stop the animation if it reaches the left side of the container (0px boundary)
+			if (currentPos <= 0) {
+				pet.petContainer.style.left = '0px';
+				pet.stop();
+				return;
+			}
+			
+			pet.petContainer.style.left = (currentPos - 10) + 'px';
+			pet.animate = setTimeout(pet.animateLeft,20);
 		},
 		// Move right command.
 		moveRight : function (){
@@ -71,8 +79,18 @@
 		// Move right action that calls itself and keeps going until stop is called.
 		animateRight : function () {
 			pet.xPos = pet.petContainer.style.left;
-			console.log("xpos: " + pet.xPos );
-			pet.petContainer.style.left = parseInt(pet.petContainer.style.left) + 10 + 'px';
+			var currentPos = parseInt(pet.petContainer.style.left);
+			var sceneContainer = document.getElementById('scene');
+			var maxRight = sceneContainer.offsetWidth - pet.width;
+			
+			//stop the animation if it reaches the right side of the container
+			if (currentPos >= maxRight) {
+				pet.petContainer.style.left = maxRight + 'px';
+				pet.stop();
+				return;
+			}
+			
+			pet.petContainer.style.left = (currentPos + 10) + 'px';
 			pet.animate = setTimeout(pet.animateRight,20);	
 		},
 		// Stops the animal while running.
